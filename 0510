@@ -1,0 +1,109 @@
+#include <iostream>
+
+#include<string.h>
+
+#include<stdio.h>
+
+#include<stdlib.h>
+
+
+using namespace std;
+
+class Name
+{
+public:
+
+    Name(const char *myp) {
+
+        m_len = strlen(myp);
+
+
+        m_p = (char *)malloc(m_len+1);
+
+        strcpy(m_p,myp);
+    }
+    //拷贝构造函数。
+/*Name(const Name& obj1){
+
+     m_len = obj1.m_len;
+
+     m_p  = (char*)malloc(m_len+1);
+
+     strcpy(m_p,obj1.m_p);
+
+}*/
+    //
+    Name& operator =( Name& obj1){//返回Name可以支持链式编程。
+
+         m_len = obj1.m_len;
+
+         m_p  = (char*)malloc(m_len+1);
+
+         strcpy(m_p,obj1.m_p);
+          return *this;
+    }
+
+
+    ~Name(){
+
+            if(m_p!=NULL){
+
+                free(m_p);
+
+                m_p = NULL;
+
+                m_len = 0;
+            }
+
+}
+  void printCom(){
+
+        for(int i=0;i<m_len;i++){
+
+        cout<<" "<<*m_p++ ;
+
+
+     }
+
+     cout<<" "<<m_len<<endl;
+}
+    //friend Name& operator =(Name& a1,Name& a2);
+
+private:
+
+    char *m_p;
+
+    int   m_len;
+
+
+};
+
+//Name& operator =(Name& a1,Name& a2){
+
+
+//    a1.m_len = a2.m_len;
+
+//    a1.m_p  = (char*)malloc(a1.m_len+1);
+
+//    strcpy(a1.m_p,a2.m_p);
+
+//    return a1;
+//}
+
+int  main(){
+
+    Name obj1("abcddd"),obj2("abbbbbbbb");
+
+
+    //Name obj2 = obj1;
+
+    Name obj3("obj3");
+
+    obj3 = obj1=obj2;
+
+    obj3.printCom();
+
+    return 0;
+
+}
+
